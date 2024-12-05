@@ -11,5 +11,9 @@ namespace ShippingService.Application.Interfaces
     {
 
         Task AddAsync(Address address);
+        Task AddAsync(Package package);
+
+        Task<List<Package>> GetAllPackagesAsync();
+        Task<List<Address>> GetAllAddressesAsync();
     }
 }

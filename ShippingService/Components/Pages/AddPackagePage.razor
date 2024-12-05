@@ -1,0 +1,54 @@
+﻿@page "/addpackage"
+
+@inject IInventory Inventory
+@inject NavigationManager Navigation
+
+<h3>Add New Package</h3>
+
+<div class="row justify-content-center">
+    <div class="col-6">
+        <EditForm method="post" FormName="AddPackageForm" Model="Package" OnValidSubmit="AddPackage" autocomplete="off">
+            <h3>
+                Add New Package
+            </h3>
+            <div class="mb-3">
+                <label for="Name" class="form-label">
+                    Name
+                </label>
+                <InputText id="Name" @bind-Value="Package.Name" class="form-control shadow-none"></InputText>
+            </div>
+            <div class="mb-3">
+                <label for="Description" class="form-label">
+                    Description
+                </label>
+                <InputTextArea id="Description" @bind-Value="Package.Description" class="form-control shadow-none"></InputTextArea>
+            </div>
+            <div class="mb-3">
+                <label for="Seller" class="form-label">
+                    Seller
+                </label>
+                <InputText id="Seller" @bind-Value="Package.Seller" class="form-control shadow-none"></InputText>
+            </div>
+            
+            <div>
+                <button type="submit" class="btn-primary">Submit</button>
+            </div>
+
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+        </EditForm>
+    </div>
+</div>
+
+@code {
+
+    [SupplyParameterFromForm]
+    public Package Package { get; set; } = new();
+
+    private async Task AddPackage()
+    {
+        await Inventory.AddAsync(Package);
+        Navigation.NavigateTo("/");
+    }
+}

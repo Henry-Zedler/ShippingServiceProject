@@ -18,5 +18,23 @@ namespace ShippingService.Infrastructure.Repositories
             context.Addresses.Add(address);
             await context.SaveChangesAsync();
         }
+
+        public async Task AddAsync(Package package)
+        {
+            context.Packages.Add(package);
+            await context.SaveChangesAsync();
+        }
+
+        public Task<List<Package>> GetAllPackagesAsync()
+        {
+            var packs = context.Packages.ToListAsync();
+            return packs;
+        }
+
+        public Task<List<Address>> GetAllAddressesAsync()
+        {
+            var addresses = context.Addresses.ToListAsync();
+            return addresses;
+        }
     }
 }
