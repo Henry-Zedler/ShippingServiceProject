@@ -1,0 +1,70 @@
+﻿@page "/addaddress"
+
+@inject IInventory Inventory
+@inject NavigationManager Navigation
+
+<h3>Add New Address</h3>
+
+<div class="row justify-content-center">
+    <div class="col-6">
+        <EditForm method="post" FormName="AddAddressForm" Model="Address" OnValidSubmit="AddAddress" autocomplete="off">
+            <h3>
+                Add New Address
+            </h3>
+            <div class="mb-3">
+                <label for="Line1" class="form-label">
+                    Line 1
+                </label>
+                <InputText id="title" @bind-Value="Address.Line1" class="form-control shadow-none"></InputText>
+            </div>
+            <div class="mb-3">
+                <label for="Line2" class="form-label">
+                    Line 2
+                </label>
+                <InputText id="Line2" @bind-Value="Address.Line2" class="form-control shadow-none"></InputText>
+            </div>
+            <div class="mb-3">
+                <label for="City" class="form-label">
+                    City
+                </label>
+                <InputText id="City" @bind-Value="Address.City" class="form-control shadow-none"></InputText>
+            </div>
+            <div class="mb-3">
+                <label for="State" class="form-label">
+                    State
+                </label>
+                <InputSelect id="State" @bind-Value="Address.State" class="form-control shadow-none">
+                    @foreach (var value in Enum.GetValues<State>()) 
+                    {
+                        <option value="@value">@value</option>
+                    }
+                </InputSelect>
+            </div>
+            <div class="mb-3">
+                <label for="Zip" class="form-label">
+                    ZIP Code
+                </label>
+                <InputNumber id="Zip" @bind-Value="Address.Zip" class="form-control shadow-none"></InputNumber>
+            </div>
+            <div>
+                <button type="submit" class="btn-primary">Submit</button>
+            </div>
+
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+        </EditForm>
+    </div>
+</div>
+
+@code {
+
+    [SupplyParameterFromForm]
+    public Address Address { get; set; } = new();
+
+    private async Task AddAddress()
+    {
+        await Inventory.AddAsync(Address);
+        Navigation.NavigateTo("/");
+    }
+}
