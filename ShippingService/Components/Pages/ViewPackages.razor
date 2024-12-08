@@ -1,6 +1,17 @@
 ﻿@page "/viewpackages"
 
+@inject IInventory Inventory
+
 <h3>View Packages</h3>
+
+<div class="row justify-content-center">
+    <div class="col-6">
+        <a href="addpackage" class="btn btn-primary shadow-none mb-3">
+            Add Package
+        </a>
+        @if ()
+    </div>
+</div>
 
 @code {
 
