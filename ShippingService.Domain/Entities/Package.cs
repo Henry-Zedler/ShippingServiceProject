@@ -6,20 +6,19 @@ namespace ShippingService.Domain.Entities
 {
     public class Package
     {
-        [Key]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please provide a name")]
         [MaxLength(100)]
         public string? Name { get; set; }
 
 
-        [Required]
+        [Required(ErrorMessage = "Please provide a description")]
         [MaxLength(100)]
         public string? Description { get; set; }
 
 
-        [Required]
+        [Required(ErrorMessage = "Please provide a description")]
         [MaxLength(100)]
         public string? Seller { get; set; }
 

@@ -1,0 +1,73 @@
+﻿@page "/edit/{id:int}"
+@inject IInventory Repository
+@inject NavigationManager Navigation
+
+<PageTitle>
+    Edit Package Details
+</PageTitle>
+
+@if (Package is not null)
+{
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <EditForm method="post" Enhance="true" FormName="EditPackageForm" Model="Package" OnValidSubmit="EditPackage1" autocomplete="off">
+                <h3>
+                    Edit package @Id
+                </h3>
+                <input type="hidden" name="Book.Id" value="@Package.Id" />
+                <div class="mb-3">
+                    <label for="Name" class="form-label">
+                        Name
+                    </label>
+                    <InputText id="Name" @bind-Value="Package.Name" class="form-control shadow-none"></InputText>
+                </div>
+                <div class="mb-3">
+                    <label for="Description" class="form-label">
+                        Description
+                    </label>
+                    <InputTextArea id="Description" @bind-Value="Package.Description" class="form-control shadow-none"></InputTextArea>
+                </div>
+                <div class="mb-3">
+                    <label for="Seller" class="form-label">
+                        Seller
+                    </label>
+                    <InputText id="Seller" @bind-Value="Package.Seller" class="form-control shadow-none"></InputText>
+                </div>
+                <div class="mb-3">
+                    <button class="btn-primary shadow-none">Submit</button>
+                    <a href="/viewpackages" class="btn btn-secondary shadow-none ms-3">
+                        Go back to list
+                    </a>
+                </div>
+
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+
+            </EditForm>
+        </div>
+    </div>
+}
+
+
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    [SupplyParameterFromForm]
+    public Package? Package { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Package ??= await Repository.GetPackageByIdAsync(Id);
+    }
+
+    private async Task EditPackage1()
+    {
+        if (Package is not null)
+        {
+            await Repository.UpdateAsync(Package);
+            Navigation.NavigateTo("/");
+        }
+    }
+}

@@ -8,7 +8,7 @@ namespace ShippingService.Components.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            packages = await Inventory.GetAllPackagesAsync();
+            packages = await Repository.GetAllPackagesAsync();
         }
     }
 }
