@@ -11,7 +11,7 @@ using ShippingService.Infrastructure.Context;
 namespace ShippingService.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241209210410_initial")]
+    [Migration("20241210225105_initial")]
     partial class initial
     {
         /// <inheritdoc />
