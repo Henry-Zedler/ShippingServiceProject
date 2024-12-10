@@ -5,8 +5,7 @@ namespace ShippingService.Domain.Entities
 {
     public class Address
     {
-        [Key]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [MaxLength(100)]

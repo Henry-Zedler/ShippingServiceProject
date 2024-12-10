@@ -1,4 +1,6 @@
-﻿namespace ShippingService.Domain.Enums
+﻿
+
+namespace ShippingService.Domain.Enums
 {
     public enum State
     {

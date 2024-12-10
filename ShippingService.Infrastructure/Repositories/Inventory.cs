@@ -36,5 +36,35 @@ namespace ShippingService.Infrastructure.Repositories
             var addresses = context.Addresses.ToListAsync();
             return addresses;
         }
+        public async Task<Package?> GetPackageByIdAsync(int id)
+        {
+            var package = await context.Packages.FirstOrDefaultAsync(x => x.Id == id);
+            return package;
+        }
+        public async Task<Address?> GetAddressByIdAsync(int aid)
+        {
+            var address1 = await context.Addresses.FirstOrDefaultAsync(x => x.Id == aid);
+            return address1;
+        }
+        public async Task UpdateAsync(Address address)
+        {
+            context.Entry(address).State = EntityState.Modified;
+            await context.SaveChangesAsync();
+        }
+        public async Task UpdateAsync(Package package)
+        {
+            context.Entry(package).State = EntityState.Modified;
+            await context.SaveChangesAsync();
+        }
+
+        public async Task DeleteByPackageIdAsync(int id)
+        {
+            var package = await GetPackageByIdAsync(id);
+            if (package != null)
+            {
+                context.Packages.Remove(package);
+                await context.SaveChangesAsync();
+            }
+        }
     }
 }

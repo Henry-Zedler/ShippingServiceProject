@@ -1,0 +1,30 @@
+﻿@if (Show)
+{
+    <div style="position: absolute !important; top: 0 !important; right: 0 !important; bottom: 0 !important; left: 0 !important; min-height: 100vh !important; background-color: rgba(0, 0, 0, 0.5) !important; display: flex !important; flex-direction: column !important; align-items: center !important;">
+        <div style="display: flex !important; flex-direction: column !important; justify-content: space-between !important; min-width: 20rem !important; padding: 2rem !important; border-radius: 1rem !important; background-color: white !important; margin-top: 1.5rem !important; position: fixed !important;">
+            @ChildContent
+            <div class="d-flex justify-content-end mt-3">
+                <button @onclick="OnCancel" class="btn btn-secondary shadow-none">
+                    Cancel
+                </button>
+                <button @onclick="OnDelete" class="btn btn-danger shadow-none ms-3">
+                    Delete
+                </button>
+            </div>
+        </div>
+    </div>
+
+}
+
+@code {
+    [Parameter]
+    public bool Show { get; set; }
+    [Parameter]
+    public EventCallback OnCancel { get; set; }
+    [Parameter]
+    public EventCallback OnDelete { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+}

@@ -29,9 +29,28 @@
                 </label>
                 <InputText id="Seller" @bind-Value="Package.Seller" class="form-control shadow-none"></InputText>
             </div>
-            
-            <div>
-                <button type="submit" class="btn-primary">Submit</button>
+            @*             <div class="mb-3"> *@
+@*                 <label for="category" class="form-label"> *@
+@*                     Category *@
+@*                 </label> *@
+@*                 <InputSelect id="category" @bind-Value="Book.Category" class="form-control shadow-none"> *@
+@*                     <option value="0"> *@
+@*                         Select Category *@
+@*                     </option> *@
+@*                     @foreach (var category in Enum.GetValues(typeof(Category))) *@
+@*                     { *@
+@*                         <option value="@category"> *@
+@*                             @category.ToString() *@
+@*                         </option> *@
+@*                     } *@
+@*                 </InputSelect> *@
+@*                 <ValidationMessage For="@(() => Book.Category)" /> *@
+@*             </div> *@
+            <div class="mb-3">
+                <button class="btn-primary shadow-none">Submit</button>
+                <a href="/viewpackages" class="btn btn-secondary shadow-none ms-3">
+                    Go back to list
+                </a>
             </div>
 
             <DataAnnotationsValidator />

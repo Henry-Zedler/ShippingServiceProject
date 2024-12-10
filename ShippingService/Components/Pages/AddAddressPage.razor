@@ -46,8 +46,11 @@
                 </label>
                 <InputNumber id="Zip" @bind-Value="Address.Zip" class="form-control shadow-none"></InputNumber>
             </div>
-            <div>
-                <button type="submit" class="btn-primary">Submit</button>
+            <div class="mb-3">
+                <button class="btn-primary shadow-none">Submit</button>
+                <a href="/viewpackages" class="btn btn-secondary shadow-none ms-3">
+                    Go back to list
+                </a>
             </div>
 
             <DataAnnotationsValidator />
