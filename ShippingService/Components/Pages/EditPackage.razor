@@ -66,8 +66,17 @@
     {
         if (Package is not null)
         {
-            await Repository.UpdateAsync(Package);
-            Navigation.NavigateTo("/");
+            //try
+            //{
+                await Repository.UpdateAsync(Package);
+            //}
+            //catch
+            //{
+            //}
+            //finally
+            //{
+                Navigation.NavigateTo("/");
+            //}
         }
     }
 }
