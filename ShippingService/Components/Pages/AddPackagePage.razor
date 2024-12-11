@@ -29,23 +29,52 @@
                 </label>
                 <InputText id="Seller" @bind-Value="Package.Seller" class="form-control shadow-none"></InputText>
             </div>
-            @*             <div class="mb-3"> *@
-@*                 <label for="category" class="form-label"> *@
-@*                     Category *@
-@*                 </label> *@
-@*                 <InputSelect id="category" @bind-Value="Book.Category" class="form-control shadow-none"> *@
-@*                     <option value="0"> *@
-@*                         Select Category *@
-@*                     </option> *@
-@*                     @foreach (var category in Enum.GetValues(typeof(Category))) *@
-@*                     { *@
-@*                         <option value="@category"> *@
-@*                             @category.ToString() *@
-@*                         </option> *@
-@*                     } *@
-@*                 </InputSelect> *@
-@*                 <ValidationMessage For="@(() => Book.Category)" /> *@
-@*             </div> *@
+            <div class="mb-3"> 
+                <label for="adress" class="form-label"> 
+                    Address 
+                </label>
+                @* <InputSelect id="addresses" @bind-Value="Package.AddressID" class="form-control shadow-none"> *@
+                <InputSelect id="addresses" @bind-Value="Package.Address" class="form-control shadow-none">
+
+                    <option value="0"> 
+                        Select Address
+                    </option> 
+                    @* @foreach (var address in Enum.GetValues(typeof(Address)))  *@
+
+                    @* @foreach (var address in Vaddresses) *@
+                    @* {  *@
+                    @*      <option value="@address">  *@
+                    @*          @address.ToString()  *@
+                    @*      </option>  *@
+                    @*  }  *@
+                    @* @if (Addresses != null) *@
+                    @* { *@
+                    @*     foreach (var address in Addresses) *@
+                    @*     { *@
+                    @*         if (address.Line2 is null) *@
+                    @*         { *@
+                    @*             <option value="@address.AddressId">@($"{address.Line1}, {address.City}, {address.State}, {address.Zip}")</option> *@
+                    @*         } *@
+                    @*         else  *@
+                    @*         { *@
+                    @*             <option value="@address.AddressId">@($"{address.Line1}, {address.Line2}, {address.City}, {address.State}, {address.Zip}")</option> *@
+                    @*         } *@
+                    @*     } *@
+                    @* } *@
+                    @if (Addresses != null && Addresses.Any())
+                    {
+                        foreach (var address in Addresses)
+                        {
+                            <option value="@address.Id">
+                                @($"{address.Line1}, {address.Line2 ?? string.Empty}, {address.City}, {address.State}, {address.Zip}")
+                            </option>
+                        }
+                    }
+
+
+                 </InputSelect>
+                @* <ValidationMessage For="@(() => SelectedAddressId)" /> *@
+            </div> 
             <div class="mb-3">
                 <button class="btn-primary shadow-none">Submit</button>
                 <a href="/viewpackages" class="btn btn-secondary shadow-none ms-3">
@@ -63,11 +92,33 @@
 @code {
 
     [SupplyParameterFromForm]
+    // public Package Package { get; set; } = new();
+
+    // private async Task AddPackage()
+    // {
+    //     await Inventory.AddAsync(Package);
+    //     Navigation.NavigateTo("/");
+    // }
     public Package Package { get; set; } = new();
+    private List<Address> Addresses { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Fetch addresses using the Inventory service
+        Addresses = await Inventory.GetAllAddressesAsync();
+    }
 
     private async Task AddPackage()
     {
+        // Set the Address navigation property based on the selected address ID
+        // if (SelectedAddressId.HasValue)
+        // {
+        //     Package.AddressId = SelectedAddressId.Value;
+        // }
+        // Save the package using the Inventory service
         await Inventory.AddAsync(Package);
-        Navigation.NavigateTo("/");
+
+        // Navigate back to the package list
+        Navigation.NavigateTo("/viewpackages");
     }
 }

@@ -1,13 +1,13 @@
 ﻿@inject IInventory Repository
 @inject NavigationManager Navigation
 @rendermode InteractiveServer
-<div class="package-card">
-    <div class="package-card-body">
-        <h5>@Package1.Name</h5>
-        @Package1.Description | @Package1.Seller | @Package1.Address | @Package1.Status
+<div class="address-card">
+    <div class="address-card-body">
+        <h5>@Address1.Id</h5>
+         @Address1.Line1, @Address1.Line2, @Address1.City, @Address1.State, @Address1.Zip
     </div>
     <div class="actions">
-        <a href="@($"/edit/{Package1.Id}")"
+        <a href="@($"/edit/{Address1.Id}")"
         class="btn btn-warning shadow-none">
             Edit Book
         </a>
@@ -18,12 +18,12 @@
 </div>
 <ConfirmDialog Show="showConfirmdialog" OnCancel="CancelDelete" OnDelete="DeleteBook">
     <h3>
-        Are you sure to delete package @Package1.Id?
+        Are you sure to delete package @Address1.Id?
     </h3>
 </ConfirmDialog>
 @code {
     [Parameter]
-    public required Package Package1 { get; set; }
+    public required Address Address1 { get; set; }
 
     private bool showConfirmdialog;
     private void OpenConfirmDialog()
@@ -37,7 +37,7 @@
     }
     private async Task DeleteBook()
     {
-        await Repository.DeletePackageByIdAsync(Package1.Id);
+        await Repository.DeleteAddressByIdAsync(Address1.Id);
         showConfirmdialog = false;
         Navigation.NavigateTo("/");
     }

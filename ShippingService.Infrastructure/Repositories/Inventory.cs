@@ -57,12 +57,21 @@ namespace ShippingService.Infrastructure.Repositories
             await context.SaveChangesAsync();
         }
 
-        public async Task DeleteByPackageIdAsync(int id)
+        public async Task DeletePackageByIdAsync(int id)
         {
             var package = await GetPackageByIdAsync(id);
             if (package != null)
             {
                 context.Packages.Remove(package);
+                await context.SaveChangesAsync();
+            }
+        }
+        public async Task DeleteAddressByIdAsync(int id)
+        {
+            var address = await GetAddressByIdAsync(id);
+            if (address != null)
+            {
+                context.Addresses.Remove(address);
                 await context.SaveChangesAsync();
             }
         }
