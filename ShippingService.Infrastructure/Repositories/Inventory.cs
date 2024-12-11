@@ -2,6 +2,8 @@
 using ShippingService.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using ShippingService.Domain.Entities;
+using System;
+using ShippingService.Domain.Enums;
 
 namespace ShippingService.Infrastructure.Repositories
 {
@@ -22,6 +24,13 @@ namespace ShippingService.Infrastructure.Repositories
         public async Task AddAsync(Package package)
         {
             context.Packages.Add(package);
+            context.PackEvents.Add(new PackEvent() { PackId = package.Id, Action = (PackAction)0 });
+            await context.SaveChangesAsync();
+        }
+
+        public async Task AddAsync(PackEvent packevent)
+        {
+            context.PackEvents.Add(packevent);
             await context.SaveChangesAsync();
         }
 
@@ -29,6 +38,12 @@ namespace ShippingService.Infrastructure.Repositories
         {
             var packs = context.Packages.ToListAsync();
             return packs;
+        }
+
+        public Task<List<PackEvent>> GetAllPackEventsAsync()
+        {
+            var packevents = context.PackEvents.ToListAsync();
+            return packevents;
         }
 
         public Task<List<Package>> PackageNameSearchAsync(string s)
@@ -73,6 +88,17 @@ namespace ShippingService.Infrastructure.Repositories
             }
         }
 
+        public Task<List<PackEvent>> PackEventWithActionAsync(int actionId)
+        {
+            var packevents = context.PackEvents.Where(x => x.Action.Equals(actionId)).ToListAsync();
+            return packevents;
+        }
+        public Task<List<PackEvent>> PackEventWithPackIdAsync(int packId)
+        {
+            var packevents = context.PackEvents.Where(x => x.PackId.Equals(packId)).OrderBy(x => x.PackId).ToListAsync();
+            return packevents;
+        }
+
         public Task<List<Address>> GetAllAddressesAsync()
         {
             var addresses = context.Addresses.ToListAsync();
@@ -96,6 +122,7 @@ namespace ShippingService.Infrastructure.Repositories
         public async Task UpdateAsync(Package package)
         {
             context.Entry(package).State = EntityState.Modified;
+            //context.PackEvents.Add(new PackEvent() { PackId = package.Id, Action = (PackAction)1 });
             await context.SaveChangesAsync();
         }
 
@@ -105,8 +132,15 @@ namespace ShippingService.Infrastructure.Repositories
             if (package != null)
             {
                 context.Packages.Remove(package);
+                context.PackEvents.Add(new PackEvent() { PackId = package.Id, Action = (PackAction)5 });
                 await context.SaveChangesAsync();
             }
+        }
+
+        public async Task ClearPackageHistory()
+        {
+            context.PackEvents.RemoveRange(context.PackEvents);
+            await context.SaveChangesAsync();
         }
     }
 }

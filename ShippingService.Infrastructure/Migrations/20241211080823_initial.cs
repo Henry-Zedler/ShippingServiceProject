@@ -28,6 +28,20 @@ namespace ShippingService.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PackEvents",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PackId = table.Column<int>(type: "int", nullable: false),
+                    Action = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PackEvents", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Packages",
                 columns: table => new
                 {
@@ -60,6 +74,9 @@ namespace ShippingService.Infrastructure.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Packages");
+
+            migrationBuilder.DropTable(
+                name: "PackEvents");
 
             migrationBuilder.DropTable(
                 name: "Addresses");

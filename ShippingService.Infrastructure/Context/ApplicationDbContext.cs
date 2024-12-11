@@ -12,6 +12,7 @@ namespace ShippingService.Infrastructure.Context
 
         public DbSet<Package> Packages { get; set; }
         public DbSet<Address> Addresses { get; set; }
+        public DbSet<PackEvent> PackEvents { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -23,6 +24,8 @@ namespace ShippingService.Infrastructure.Context
             modelBuilder.Entity<Package>().Property(e => e.Name).IsRequired().HasMaxLength(100);
             modelBuilder.Entity<Package>().Property(e => e.Description).IsRequired().HasMaxLength(100);
             modelBuilder.Entity<Package>().Property(e => e.Seller).IsRequired().HasMaxLength(100);
+
+            modelBuilder.Entity<PackEvent>().Property(e => e.Id).ValueGeneratedOnAdd();
         }
     }
 }

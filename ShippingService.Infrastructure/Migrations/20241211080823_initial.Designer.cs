@@ -11,7 +11,7 @@ using ShippingService.Infrastructure.Context;
 namespace ShippingService.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241210225105_initial")]
+    [Migration("20241211080823_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -54,6 +54,25 @@ namespace ShippingService.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Addresses");
+                });
+
+            modelBuilder.Entity("ShippingService.Domain.Entities.PackEvent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Action")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PackId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PackEvents");
                 });
 
             modelBuilder.Entity("ShippingService.Domain.Entities.Package", b =>

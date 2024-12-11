@@ -53,6 +53,25 @@ namespace ShippingService.Infrastructure.Migrations
                     b.ToTable("Addresses");
                 });
 
+            modelBuilder.Entity("ShippingService.Domain.Entities.PackEvent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Action")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PackId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PackEvents");
+                });
+
             modelBuilder.Entity("ShippingService.Domain.Entities.Package", b =>
                 {
                     b.Property<int>("Id")

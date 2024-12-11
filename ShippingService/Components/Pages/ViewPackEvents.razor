@@ -1,0 +1,62 @@
+﻿@page "/history"
+@inject IInventory Inventory
+@inject NavigationManager Navigation
+@attribute [StreamRendering]
+@rendermode InteractiveServer
+
+<PageTitle>
+    Package History
+</PageTitle>
+
+<div class="row justify-content-center">
+    <div class="col-6">
+
+        @if (PackEvents is null)
+        {
+            <div class="packevent-item">
+                Loading...
+            </div>
+        }
+        else if (PackEvents.Any())
+        {
+            @foreach (var packevent in PackEvents)
+            {
+                <div class="packevent-item">
+                    <PackEventCard packEvent="packevent" />
+                </div>
+            }
+        }
+        else
+        {
+            <div class="packevent-item">
+                No Package History
+            </div>
+        }
+
+        <button @onclick="OpenConfirmDialog" class="btn alert-warning shadow-none ms-3">
+            Clear Package History
+        </button>
+    </div>
+</div>
+<ConfirmDialog Show="showConfirmDialog" OnCancel="CancelDelete" OnDelete="ClearHistory">
+    <h4><b>Are you sure you want to clear all package history?</b></h4>
+</ConfirmDialog>
+
+
+@code {
+    private bool showConfirmDialog;
+    private void OpenConfirmDialog()
+    {
+        showConfirmDialog = true;
+    }
+    private void CancelDelete()
+    {
+        showConfirmDialog = false;
+    }
+    private async Task ClearHistory()
+    {
+        await Inventory.ClearPackageHistory();
+        showConfirmDialog = false;
+        Navigation.NavigateTo("/");
+    }
+}
