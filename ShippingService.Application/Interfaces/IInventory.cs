@@ -15,6 +15,7 @@ namespace ShippingService.Application.Interfaces
 
         Task<List<Package>> GetAllPackagesAsync();
         Task<List<Address>> GetAllAddressesAsync();
+        Task<List<Package>> PackageNameSearchAsync(string s);
 
         Task<Package?> GetPackageByIdAsync(int id);
         //Task<Book?> GetByIdAsync(int id);

@@ -31,6 +31,20 @@ namespace ShippingService.Infrastructure.Repositories
             return packs;
         }
 
+        public Task<List<Package>> PackageNameSearchAsync(string s)
+        {
+            if (s is not null)
+            {
+                var packs = context.Packages.Where(x => x.Name.Contains(s)).OrderBy(x => x.Name).ToListAsync();
+                return packs;
+            }
+            else
+            {
+                var packs = context.Packages.ToListAsync();
+                return packs;
+            }
+        }
+
         public Task<List<Address>> GetAllAddressesAsync()
         {
             var addresses = context.Addresses.ToListAsync();
