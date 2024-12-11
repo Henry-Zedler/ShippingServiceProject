@@ -14,8 +14,11 @@ namespace ShippingService.Application.Interfaces
         Task AddAsync(Package package);
 
         Task<List<Package>> GetAllPackagesAsync();
+        
         Task<List<Address>> GetAllAddressesAsync();
         Task<List<Package>> PackageNameSearchAsync(string s);
+        Task<List<Package>> PackageDescriptionSearchAsync(string s);
+        Task<List<Package>> PackageSellerSearchAsync(string s);
 
         Task<Package?> GetPackageByIdAsync(int id);
         //Task<Book?> GetByIdAsync(int id);

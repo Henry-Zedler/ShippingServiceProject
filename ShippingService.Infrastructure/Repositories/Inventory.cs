@@ -45,6 +45,34 @@ namespace ShippingService.Infrastructure.Repositories
             }
         }
 
+        public Task<List<Package>> PackageDescriptionSearchAsync(string s)
+        {
+            if (s is not null)
+            {
+                var packs = context.Packages.Where(x => x.Description.Contains(s)).OrderBy(x => x.Description).ToListAsync();
+                return packs;
+            }
+            else
+            {
+                var packs = context.Packages.ToListAsync();
+                return packs;
+            }
+        }
+
+        public Task<List<Package>> PackageSellerSearchAsync(string s)
+        {
+            if (s is not null)
+            {
+                var packs = context.Packages.Where(x => x.Seller.Contains(s)).OrderBy(x => x.Seller).ToListAsync();
+                return packs;
+            }
+            else
+            {
+                var packs = context.Packages.ToListAsync();
+                return packs;
+            }
+        }
+
         public Task<List<Address>> GetAllAddressesAsync()
         {
             var addresses = context.Addresses.ToListAsync();
