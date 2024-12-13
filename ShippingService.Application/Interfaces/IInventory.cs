@@ -26,11 +26,13 @@ namespace ShippingService.Application.Interfaces
         Task<List<PackEvent>>PackEventWithPackIdAsync(int packId);
 
         Task<Package?> GetPackageByIdAsync(int id);
-        //Task<Book?> GetByIdAsync(int id);
         Task<Address?> GetAddressByIdAsync(int aid);
+
         Task UpdateAsync(Address address);
         Task UpdateAsync(Package package);
+
         Task ClearPackageHistory();
+
         Task DeletePackageByIdAsync(int id);
         Task DeleteAddressByIdAsync(int id);
     }
