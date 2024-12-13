@@ -1,22 +1,23 @@
-﻿@inject IInventory Repository
+﻿
+@inject IInventory Repository
 @inject NavigationManager Navigation
 @rendermode InteractiveServer
 <div class="package-card">
     <div class="package-card-body">
         <h5>@Package1.Name</h5>
-        @Package1.Description | @Package1.Seller | @Package1.Address | @Package1.Status
+        @Package1.Description | @Package1.Seller | Address Id: @Package1.AddressId | Status: @EnumHelper.GetEnumDescription(Package1.Status)
     </div>
     <div class="actions">
         <a href="@($"/edit/{Package1.Id}")"
         class="btn btn-warning shadow-none">
-            Edit Book
+            Edit package
         </a>
         <button @onclick="OpenConfirmDialog" class="btn btn-danger shadow-none ms-3">
             Delete
         </button>
     </div>
 </div>
-<ConfirmDialog Show="showConfirmdialog" OnCancel="CancelDelete" OnDelete="DeleteBook">
+<ConfirmDialog Show="showConfirmdialog" OnCancel="CancelDelete" OnDelete="DeletePackage">
     <h3>
         Are you sure to delete package @Package1.Id?
     </h3>
@@ -35,7 +36,7 @@
     {
         showConfirmdialog = false;
     }
-    private async Task DeleteBook()
+    private async Task DeletePackage()
     {
         await Repository.DeletePackageByIdAsync(Package1.Id);
         showConfirmdialog = false;

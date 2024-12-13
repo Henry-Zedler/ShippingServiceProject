@@ -43,8 +43,8 @@ namespace ShippingService.Infrastructure.Repositories
         }
         public async Task<Address?> GetAddressByIdAsync(int aid)
         {
-            var address1 = await context.Addresses.FirstOrDefaultAsync(x => x.Id == aid);
-            return address1;
+            var address = await context.Addresses.FirstOrDefaultAsync(x => x.Id == aid);
+            return address;
         }
         public async Task UpdateAsync(Address address)
         {
@@ -53,7 +53,7 @@ namespace ShippingService.Infrastructure.Repositories
         }
         public async Task UpdateAsync(Package package)
         {
-            context.Entry(package).State = EntityState.Modified;
+            context.Attach(package).State = EntityState.Modified;
             await context.SaveChangesAsync();
         }
 
