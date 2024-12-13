@@ -20,5 +20,7 @@ namespace ShippingService.Domain.Entities
         public State State { get; set; }
 
         public int Zip { get; set; }
+
+        public ICollection<Package> Packages { get; set; } = new List<Package>();
     }
 }

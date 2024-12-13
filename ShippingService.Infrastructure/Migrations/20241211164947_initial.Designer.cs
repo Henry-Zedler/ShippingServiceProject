@@ -11,7 +11,7 @@ using ShippingService.Infrastructure.Context;
 namespace ShippingService.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241210225105_initial")]
+    [Migration("20241211164947_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -64,7 +64,7 @@ namespace ShippingService.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("AddressId")
+                    b.Property<int>("AddressId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -95,10 +95,17 @@ namespace ShippingService.Infrastructure.Migrations
             modelBuilder.Entity("ShippingService.Domain.Entities.Package", b =>
                 {
                     b.HasOne("ShippingService.Domain.Entities.Address", "Address")
-                        .WithMany()
-                        .HasForeignKey("AddressId");
+                        .WithMany("Packages")
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Address");
+                });
+
+            modelBuilder.Entity("ShippingService.Domain.Entities.Address", b =>
+                {
+                    b.Navigation("Packages");
                 });
 #pragma warning restore 612, 618
         }

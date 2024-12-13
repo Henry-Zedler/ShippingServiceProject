@@ -14,7 +14,7 @@
                 <h3>
                     Edit package @Id
                 </h3>
-                <input type="hidden" name="Book.Id" value="@Package.Id" />
+                <input type="hidden" name="Package.Id" value="@Package.Id" />
                 <div class="mb-3">
                     <label for="Name" class="form-label">
                         Name
@@ -33,6 +33,50 @@
                     </label>
                     <InputText id="Seller" @bind-Value="Package.Seller" class="form-control shadow-none"></InputText>
                 </div>
+                <div class="mb-3"> 
+                <label for="adress" class="form-label"> 
+                    Address 
+                </label>
+
+                <InputSelect id="addresses" @bind-Value="Package.AddressId" class="form-control shadow-none">
+
+                    <option value="0"> 
+                        Select Address
+                    </option>
+                        @if (Addresses != null && Addresses.Any())
+                        {
+                            @foreach (var address in Addresses)
+                            {
+                                <option value="@address.Id">
+                                    @($"{address.Line1}, {(string.IsNullOrEmpty(address.Line2) ? "" : address.Line2 + ", ")}{address.City}, {address.State}, {address.Zip}")
+                                </option>
+                            }
+                        }
+                        else
+                        {
+                            <option disabled>No addresses available</option>
+                        }
+
+
+                 </InputSelect>
+                </div>
+                <div class="mb-3">
+                    <label for="status" class="form-label">
+                        Status
+                    </label>
+                    <InputSelect id="status" @bind-Value="Package.Status" class="form-control shadow none">
+                        <option value="0">
+                            Select Status
+                        </option>
+                        @foreach (var status in Enum.GetValues(typeof(Status)).Cast<Status>())
+                        {
+                            <option value="@status">
+                                @EnumHelper.GetEnumDescription(status)
+                            </option>
+                        }
+                    </InputSelect>
+                </div>
+
                 <div class="mb-3">
                     <button class="btn-primary shadow-none">Submit</button>
                     <a href="/viewpackages" class="btn btn-secondary shadow-none ms-3">
@@ -56,18 +100,28 @@
 
     [SupplyParameterFromForm]
     public Package? Package { get; set; }
+    private List<Address> Addresses { get; set; } = new();
 
     protected override async Task OnInitializedAsync()
     {
-        Package ??= await Repository.GetPackageByIdAsync(Id);
-    }
+        Addresses = await Repository.GetAllAddressesAsync();
+        Package ??= await Repository.GetPackageByIdAsync(Id);  // Load the specific package for editing
 
+    }
     private async Task EditPackage1()
     {
         if (Package is not null)
         {
+            // Console.WriteLine($"Id: {Package.Id}");
+            // Console.WriteLine($"Name: {Package.Name}");
+            // Console.WriteLine($"Description: {Package.Description}");
+            // Console.WriteLine($"Seller: {Package.Seller}");
+            // Console.WriteLine($"AddressId: {Package.AddressId}");
+
             await Repository.UpdateAsync(Package);
             Navigation.NavigateTo("/");
         }
     }
+
+
 }
