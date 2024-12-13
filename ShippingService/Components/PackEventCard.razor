@@ -1,0 +1,42 @@
+﻿<div class="packevent-card">
+    <div class="packevent-card-body">
+        @switch ((int)packEvent.Action)
+        {
+            case 0:
+                <div class="packevent-item">
+                    Added package no. @packEvent.PackId to the database
+                </div>
+                break;
+            case 1:
+                <div class="packevent-item">
+                    Edited package no. @packEvent.PackId
+                </div>
+                break;
+            case 2:
+                <div class="packevent-item">
+                    Edited address of package no. @packEvent.PackId
+                </div>
+                break;
+            case 3:
+                <div class="packevent-item">
+                    Shipping started for package no. @packEvent.PackId
+                </div>
+                break;
+            case 4:
+                <div class="packevent-item">
+                    Shipping completed for package no. @packEvent.PackId
+                </div>
+                break;
+            case 5:
+                <div class="packevent-item">
+                    Deleted package no. @packEvent.PackId
+                </div>
+                break;
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public required PackEvent packEvent { get; set; }
+}

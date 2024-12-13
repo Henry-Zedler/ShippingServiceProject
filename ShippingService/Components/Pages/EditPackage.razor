@@ -1,4 +1,4 @@
-﻿@page "/edit/{id:int}"
+﻿@page "/edit/{Id:int}"
 @inject IInventory Repository
 @inject NavigationManager Navigation
 
@@ -112,12 +112,6 @@
     {
         if (Package is not null)
         {
-            // Console.WriteLine($"Id: {Package.Id}");
-            // Console.WriteLine($"Name: {Package.Name}");
-            // Console.WriteLine($"Description: {Package.Description}");
-            // Console.WriteLine($"Seller: {Package.Seller}");
-            // Console.WriteLine($"AddressId: {Package.AddressId}");
-
             await Repository.UpdateAsync(Package);
             Navigation.NavigateTo("/");
         }
