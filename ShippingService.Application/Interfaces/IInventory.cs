@@ -30,9 +30,8 @@ namespace ShippingService.Application.Interfaces
         Task<Address?> GetAddressByIdAsync(int aid);
         Task UpdateAsync(Address address);
         Task UpdateAsync(Package package);
-
-        Task DeleteByPackageIdAsync(int id);
-
         Task ClearPackageHistory();
+        Task DeletePackageByIdAsync(int id);
+        Task DeleteAddressByIdAsync(int id);
     }
 }

@@ -111,8 +111,8 @@ namespace ShippingService.Infrastructure.Repositories
         }
         public async Task<Address?> GetAddressByIdAsync(int aid)
         {
-            var address1 = await context.Addresses.FirstOrDefaultAsync(x => x.Id == aid);
-            return address1;
+            var address = await context.Addresses.FirstOrDefaultAsync(x => x.Id == aid);
+            return address;
         }
         public async Task UpdateAsync(Address address)
         {
@@ -121,12 +121,12 @@ namespace ShippingService.Infrastructure.Repositories
         }
         public async Task UpdateAsync(Package package)
         {
-            context.Entry(package).State = EntityState.Modified;
-            //context.PackEvents.Add(new PackEvent() { PackId = package.Id, Action = (PackAction)1 });
+            context.Attach(package).State = EntityState.Modified;
+            context.PackEvents.Add(new PackEvent() { PackId = package.Id, Action = (PackAction)1 });
             await context.SaveChangesAsync();
         }
 
-        public async Task DeleteByPackageIdAsync(int id)
+        public async Task DeletePackageByIdAsync(int id)
         {
             var package = await GetPackageByIdAsync(id);
             if (package != null)
@@ -136,11 +136,21 @@ namespace ShippingService.Infrastructure.Repositories
                 await context.SaveChangesAsync();
             }
         }
-
+        
         public async Task ClearPackageHistory()
         {
             context.PackEvents.RemoveRange(context.PackEvents);
             await context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAddressByIdAsync(int id)
+        {
+            var address = await GetAddressByIdAsync(id);
+            if (address != null)
+            {
+                context.Addresses.Remove(address);
+                await context.SaveChangesAsync();
+            }
         }
     }
 }

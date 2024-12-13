@@ -1,0 +1,60 @@
+﻿@*@page "/viewpackages"
+
+@inject IInventory Inventory
+
+<h3>View Packages</h3>
+
+<div class="row justify-content-center">
+    <div class="col-6">
+        <a href="addpackage" class="btn btn-primary shadow-none mb-3">
+            Add Package
+        </a>
+        @if ()
+    </div>
+</div>
+
+@code {
+
+}*@
+@page "/viewaddresses"
+@inject IInventory Repository
+@attribute [StreamRendering]
+@rendermode InteractiveServer
+
+<PageTitle>Addreses view</PageTitle>
+<center>
+    <h2> All addresses </h2>
+</center>
+
+
+<div class="row justify-content-center">
+    <div class="col-6">
+
+        @if (addresses is null)
+        {
+            <div class="address-item">
+                Loading addresses... Please wait!
+            </div>
+        }
+        else if (addresses.Any())
+        {
+            @foreach (var address in addresses)
+            {
+                <div class="address-item">
+                    <AddressCard Address1="address" />
+                </div>
+            }
+        }
+        else
+        {
+            <div class="address-item">
+                No addresses found!
+            </div>
+        }
+
+        <a href="addaddress" class="btn btn-primary shadow-none mb-3">
+            Add new package
+        </a>
+    </div>
+</div>
+

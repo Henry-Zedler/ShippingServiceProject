@@ -21,8 +21,13 @@ namespace ShippingService.Domain.Entities
         [Required(ErrorMessage = "Please provide a description")]
         [MaxLength(100)]
         public string? Seller { get; set; }
+        //Foreign key property
+        [Required(ErrorMessage = "Please provide an Address")]
+        public int? AddressId { get; set; }
 
+        //Navigation property
         public Address? Address { get; set; }
+
 
         public Status Status { get; set; }
     }
