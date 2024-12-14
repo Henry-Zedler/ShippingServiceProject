@@ -29,33 +29,33 @@
                 </label>
                 <InputText id="Seller" @bind-Value="Package.Seller" class="form-control shadow-none"></InputText>
             </div>
-            <div class="mb-3"> 
-                <label for="adress" class="form-label"> 
-                    Address 
-                </label>
+            @* <div class="mb-3">  *@
+            @*     <label for="adress" class="form-label">  *@
+            @*         Address  *@
+            @*     </label> *@
 
-                <InputSelect id="addresses" @bind-Value="Package.AddressId" class="form-control shadow-none">
+            @* <InputSelect id="addresses" @bind-Value="Package.AddressId" class="form-control shadow-none"> *@
 
-                    <option value="0"> 
-                        Select Address
-                    </option> 
-                     @if (Addresses != null) 
-                     { 
-                         foreach (var address in Addresses) 
-                         { 
-                             if (address.Line2 is null) 
-                             { 
-                                 <option value="@address.Id">@($"{address.Line1}, {address.City}, {address.State}, {address.Zip}")</option> 
-                             } 
-                             else  
-                             { 
-                                 <option value="@address.Id">@($"{address.Line1}, {address.Line2}, {address.City}, {address.State}, {address.Zip}")</option> 
-                             } 
-                         } 
-                     }
+            @*     <option value="0">  *@
+            @*         Select Address *@
+            @*     </option>  *@
+            @*      @if (Addresses != null)  *@
+            @*      {  *@
+            @*          foreach (var address in Addresses)  *@
+            @*          {  *@
+            @*              if (address.Line2 is null)  *@
+            @*              {  *@
+            @*                  <option value="@address.Id">@($"{address.Line1}, {address.City}, {address.State}, {address.Zip}")</option>  *@
+            @*              }  *@
+            @*              else   *@
+            @*              {  *@
+            @*                  <option value="@address.Id">@($"{address.Line1}, {address.Line2}, {address.City}, {address.State}, {address.Zip}")</option>  *@
+            @*              }  *@
+            @*          }  *@
+            @*      } *@
 
-                 </InputSelect>
-            </div> 
+            @* </InputSelect> *@
+            @* </div>  *@
             <div class="mb-3">
                 <button class="btn-primary shadow-none">Submit</button>
                 <a href="/viewpackages" class="btn btn-secondary shadow-none ms-3">
@@ -75,11 +75,13 @@
     [SupplyParameterFromForm]
 
     public Package Package { get; set; } = new();
-    public List<Address> Addresses { get; set; } = new();
+    // public List<Address> Addresses { get; set; } = new();
 
     protected override async Task OnInitializedAsync()
     {
-        Addresses = await Inventory.GetAllAddressesAsync();
+        // Addresses = await Inventory.GetAllAddressesAsync();
+        Package.AddressId = null;
+        await Task.CompletedTask;
     }
 
     private async Task AddPackage()

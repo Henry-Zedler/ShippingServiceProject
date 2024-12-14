@@ -34,15 +34,15 @@
                     <InputText id="Seller" @bind-Value="Package.Seller" class="form-control shadow-none"></InputText>
                 </div>
                 <div class="mb-3"> 
-                <label for="adress" class="form-label"> 
-                    Address 
-                </label>
+                    <label for="adress" class="form-label"> 
+                        Address 
+                    </label>
 
-                <InputSelect id="addresses" @bind-Value="Package.AddressId" class="form-control shadow-none">
+                    <InputSelect id="addresses" @bind-Value="Package.AddressId" class="form-control shadow-none">
 
-                    <option value="0"> 
-                        Select Address
-                    </option>
+                        <option value=""> 
+                            Select Address
+                        </option>
                         @if (Addresses != null && Addresses.Any())
                         {
                             @foreach (var address in Addresses)
@@ -56,14 +56,16 @@
                         {
                             <option disabled>No addresses available</option>
                         }
-
-
-                 </InputSelect>
+                    </InputSelect>
                 </div>
                 <div class="mb-3">
                     <label for="status" class="form-label">
                         Status
                     </label>
+                    @if (Package.AddressId != null){
+                        Package.Status = Status.Processing_Order;
+
+                    }
                     <InputSelect id="status" @bind-Value="Package.Status" class="form-control shadow none">
                         <option value="0">
                             Select Status
@@ -78,7 +80,10 @@
                 </div>
 
                 <div class="mb-3">
-                    <button class="btn-primary shadow-none">Submit</button>
+                    <button class="btn-primary shadow-none ms-3" padding: .375 .75 >Submit</button>
+                    <a href="/addaddress" class="btn btn-secondary shadow-none ms-3">
+                        Add address
+                    </a>
                     <a href="/viewpackages" class="btn btn-secondary shadow-none ms-3">
                         Go back to list
                     </a>
@@ -107,6 +112,11 @@
         Addresses = await Repository.GetAllAddressesAsync();
         Package ??= await Repository.GetPackageByIdAsync(Id);  // Load the specific package for editing
 
+        // If AddressId is not set, ensure it defaults to null for "Select Address"
+        if (Package != null && (Package.AddressId == 0 || Package.AddressId == null))
+        {
+            Package.AddressId = null; // Ensures dropdown shows "Select Address"
+        }
     }
     private async Task EditPackage1()
     {

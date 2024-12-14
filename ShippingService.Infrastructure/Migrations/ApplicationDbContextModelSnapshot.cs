@@ -80,7 +80,7 @@ namespace ShippingService.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AddressId")
+                    b.Property<int?>("AddressId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -112,9 +112,7 @@ namespace ShippingService.Infrastructure.Migrations
                 {
                     b.HasOne("ShippingService.Domain.Entities.Address", "Address")
                         .WithMany("Packages")
-                        .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AddressId");
 
                     b.Navigation("Address");
                 });
