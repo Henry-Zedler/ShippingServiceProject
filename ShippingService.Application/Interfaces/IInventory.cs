@@ -18,6 +18,7 @@ namespace ShippingService.Application.Interfaces
         Task<List<Address>> GetAllAddressesAsync();
         Task<List<PackEvent>> GetAllPackEventsAsync();
 
+        Task<List<Package>> PackageAttributeSearchAsync(Func<Package, string> field, string search);
         Task<List<Package>> PackageNameSearchAsync(string s);
         Task<List<Package>> PackageDescriptionSearchAsync(string s);
         Task<List<Package>> PackageSellerSearchAsync(string s);

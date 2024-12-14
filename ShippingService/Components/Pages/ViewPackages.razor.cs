@@ -51,5 +51,19 @@ namespace ShippingService.Components.Pages
             }
             StateHasChanged();
         }
+
+        protected async Task SearchLine1(Microsoft.AspNetCore.Components.ChangeEventArgs args)
+        {
+            if (args is not null)
+            {
+                var query = (string)args.Value;
+                packages = await Repository.PackageAttributeSearchAsync(field: x => x.Name, query);
+            }
+            else
+            {
+                packages = await Repository.GetAllPackagesAsync();
+            }
+            StateHasChanged();
+        }
     }
 }

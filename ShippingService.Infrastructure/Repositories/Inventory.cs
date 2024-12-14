@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using ShippingService.Domain.Entities;
 using System;
 using ShippingService.Domain.Enums;
+using System.Linq.Expressions;
 
 namespace ShippingService.Infrastructure.Repositories
 {
@@ -44,6 +45,20 @@ namespace ShippingService.Infrastructure.Repositories
         {
             var packevents = context.PackEvents.ToListAsync();
             return packevents;
+        }
+
+        public Task<List<Package>> PackageAttributeSearchAsync(Func<Package, string> field, string s)
+        {
+            if (s is not null)
+            {
+                    var packs = context.Packages.Where(x => field.Invoke(x).Contains(s)).OrderBy(x => field.Invoke(x)).ToListAsync();
+                    return packs;
+            }
+            else
+            {
+                var packs = context.Packages.ToListAsync();
+                return packs;
+            }
         }
 
         public Task<List<Package>> PackageNameSearchAsync(string s)
